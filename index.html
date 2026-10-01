@@ -163,11 +163,6 @@
 
       <!-- Action Nav Buttons -->
       <div class="flex items-center space-x-3">
-        <button id="btnSeedData" onclick="seedSampleList()" class="hidden md:flex items-center space-x-2 text-xs bg-cozy-wood hover:bg-amber-200 text-cozy-woodDark font-bold px-3 py-2 rounded-xl border-2 border-cozy-woodBorder cozy-btn">
-          <i class="fa-solid fa-cloud-arrow-up"></i>
-          <span>Muat Contoh 21 Mahasiswa</span>
-        </button>
-
         <button onclick="openCreateModal()" class="flex items-center space-x-2 bg-cozy-green hover:bg-emerald-600 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl border-2 border-cozy-greenDark cozy-btn">
           <i class="fa-solid fa-plus-circle"></i>
           <span>Buat Forum / List</span>
@@ -268,7 +263,6 @@
 
   </main>
 
-
   <!-- MODAL 1: Create New Forum Topic -->
   <div id="modalCreateForum" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="cozy-card w-full max-w-lg p-6 relative">
@@ -339,7 +333,6 @@
     </div>
   </div>
 
-
   <!-- MODAL 2: Add Entry to Specific Forum List -->
   <div id="modalAddEntry" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="cozy-card w-full max-w-md p-6 relative">
@@ -398,7 +391,6 @@
     </div>
   </div>
 
-
   <!-- MODAL 3: Forum Detail & Chat Room -->
   <div id="modalForumRoom" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-5 hidden">
     <div class="cozy-card w-full max-w-3xl max-h-[92vh] flex flex-col p-4 sm:p-6 relative overflow-hidden">
@@ -408,11 +400,21 @@
 
       <!-- Forum Header Detail -->
       <div class="border-b-2 border-cozy-woodBorder pb-4 mb-4">
-        <div class="flex flex-wrap items-center gap-2 mb-1">
-          <span id="roomCategoryBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cozy-wood text-cozy-woodDark border border-cozy-woodBorder"></span>
-          <span id="roomClassBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border"></span>
-          <span id="roomCourseBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200"></span>
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="roomCategoryBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cozy-wood text-cozy-woodDark border border-cozy-woodBorder"></span>
+            <span id="roomClassBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border"></span>
+            <span id="roomCourseBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200"></span>
+          </div>
+          
+          <div id="roomAdminActions" class="hidden flex items-center space-x-2 bg-amber-100/80 px-2.5 py-1 rounded-xl border border-cozy-woodBorder">
+            <span class="text-[10px] font-bold text-cozy-woodDark">Aksi Admin:</span>
+            <button id="btnRoomDeleteForum" class="text-xs bg-rose-500 hover:bg-rose-600 text-white font-bold px-2.5 py-1 rounded-lg border border-rose-700 transition">
+              <i class="fa-solid fa-trash-can mr-1"></i> Hapus Forum Ini
+            </button>
+          </div>
         </div>
+
         <h2 id="roomTitle" class="text-xl sm:text-2xl font-extrabold text-cozy-charcoal"></h2>
         <p id="roomDescription" class="text-xs sm:text-sm text-slate-600 mt-1"></p>
       </div>
@@ -485,7 +487,6 @@
     </div>
   </div>
 
-
   <!-- MODAL 4: Admin Passcode Login -->
   <div id="modalAdminAuth" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="cozy-card w-full max-w-sm p-6 text-center relative">
@@ -496,12 +497,15 @@
       <div class="w-12 h-12 rounded-2xl bg-amber-100 border-2 border-cozy-woodBorder text-cozy-woodDark mx-auto flex items-center justify-center text-xl mb-3">
         <i class="fa-solid fa-key"></i>
       </div>
-      <h3 class="text-lg font-extrabold text-cozy-charcoal">Akses Admin</h3>
-      <p class="text-xs text-slate-500 mb-4 font-medium">Masukkan kata sandi admin untuk fitur kelola pin & hapus</p>
+      <h3 class="text-lg font-extrabold text-cozy-charcoal">Akses Admin Portal</h3>
+      <p class="text-xs text-slate-500 mb-1 font-medium">Masukkan kata sandi admin untuk kelola pin & hapus forum</p>
+      <div class="mb-4 inline-block bg-amber-100/80 px-3 py-1 rounded-lg border border-cozy-woodBorder text-[11px] font-bold text-cozy-woodDark">
+        🔑 Password Admin: <code class="bg-white px-1.5 py-0.5 rounded text-emerald-800">gamedev123</code>
+      </div>
 
       <form onsubmit="handleAdminAuth(event)" class="space-y-4">
         <div>
-          <input type="password" id="adminPasscode" required placeholder="Sandi Admin..." class="w-full cozy-input px-3 py-2 text-center text-sm font-mono tracking-widest">
+          <input type="password" id="adminPasscode" required placeholder="Masukkan Sandi..." class="w-full cozy-input px-3 py-2 text-center text-sm font-mono tracking-widest">
         </div>
         <p id="adminAuthError" class="text-xs text-rose-500 font-bold hidden">Sandi salah!</p>
         <button type="submit" class="w-full py-2.5 text-xs font-bold bg-cozy-woodDark text-white rounded-xl border-2 border-amber-950 cozy-btn">
@@ -522,7 +526,6 @@
   </footer>
 
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
-
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -730,13 +733,13 @@
 
     window.deleteForum = async (forumId) => {
       if (!isAdminLoggedIn) return;
-      if (confirm("Hapus forum ini beserta isian dan komentar di dalamnya?")) {
+      if (confirm("Hapus forum ini beserta seluruh isian list dan komentar di dalamnya?")) {
         try {
           await remove(ref(db, `forums/${forumId}`));
           if (activeRoomForumId === forumId) closeModal('modalForumRoom');
-          showToast("Forum berhasil dihapus", "info");
+          showToast("Forum berhasil dihapus oleh admin", "info");
         } catch (err) {
-          showToast("Gagal menghapus: " + err.message, "error");
+          showToast("Gagal menghapus forum: " + err.message, "error");
         }
       }
     };
@@ -847,6 +850,14 @@
       document.getElementById('btnCopyWaRoom').onclick = () => copyListToClipboard(forum.id);
       document.getElementById('btnAddEntryRoom').onclick = () => openAddEntryModal(forum.id, forum.title);
 
+      const roomAdminActions = document.getElementById('roomAdminActions');
+      if (isAdminLoggedIn) {
+        roomAdminActions.classList.remove('hidden');
+        document.getElementById('btnRoomDeleteForum').onclick = () => deleteForum(forum.id);
+      } else {
+        roomAdminActions.classList.add('hidden');
+      }
+
       const itemsArr = forum.items ? Object.values(forum.items).sort((a, b) => a.timestamp - b.timestamp) : [];
       document.getElementById('roomListCount').innerText = itemsArr.length;
 
@@ -931,19 +942,16 @@
               <i class="fa-solid fa-folder-open"></i>
             </div>
             <h3 class="text-lg font-bold text-cozy-charcoal mb-1">Belum Ada Forum</h3>
-            <p class="text-xs text-slate-500 mb-4">Klik tombol di bawah untuk memuat data awal contoh 21 mahasiswa atau buat forum baru.</p>
-            <button onclick="seedSampleList()" class="bg-cozy-green text-white text-xs font-bold px-4 py-2.5 rounded-xl border-2 border-cozy-greenDark cozy-btn">
-              Muat Contoh 21 Mahasiswa
+            <p class="text-xs text-slate-500 mb-4">Klik tombol "Buat Forum / List" untuk memulai forum baru.</p>
+            <button onclick="openCreateModal()" class="bg-cozy-green text-white text-xs font-bold px-4 py-2.5 rounded-xl border-2 border-cozy-greenDark cozy-btn">
+              <i class="fa-solid fa-plus-circle mr-1"></i> Buat Forum Pertama
             </button>
           </div>
         `;
-        document.getElementById('btnSeedData').classList.remove('hidden');
         document.getElementById('statTotalForums').innerText = '0';
         document.getElementById('statTotalItems').innerText = '0';
         return;
       }
-
-      document.getElementById('btnSeedData').classList.add('hidden');
 
       let forumsArray = Object.values(forumsData);
 
@@ -1078,73 +1086,6 @@
       console.error(err);
       showToast("Gagal memuat data dari database", "error");
     });
-
-    window.seedSampleList = async () => {
-      const sampleListItems = [
-        { studentName: "Icha", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Guardian Tales" },
-        { studentName: "Harits", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Call of Duty Mobile" },
-        { studentName: "Handrian", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Baldur's Gate 3" },
-        { studentName: "Kaka", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Minecraft Dungeons 2" },
-        { studentName: "Regan", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Reverse: 1999" },
-        { studentName: "Alan", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Honkai Star Rail" },
-        { studentName: "Zaki H", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Starsailors" },
-        { studentName: "Stela", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "It Takes Two" },
-        { studentName: "Dakota", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "Morrowind" },
-        { studentName: "Rohim", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "MCSR Ranked" },
-        { studentName: "Jovani", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "Final Fantasy VII" },
-        { studentName: "Bella Natasya", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Euro Truck Simulator 2" },
-        { studentName: "Bintang", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Ultraman: Fighting Evolution 3" },
-        { studentName: "Noval", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Kamen Rider: Super Climax Heroes" },
-        { studentName: "Teuku", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Genshin Impact" },
-        { studentName: "Miftah", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Cities: Skylines" },
-        { studentName: "Aurelia", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "Theo Town" },
-        { studentName: "Nafia", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "Zenless Zone Zero" },
-        { studentName: "Kairi", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "Dying Light" },
-        { studentName: "Dava", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Overgeared Hero" },
-        { studentName: "Nailah", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "The Sims 2" }
-      ];
-
-      const newForumRef = push(ref(db, 'forums'));
-      const forumId = newForumRef.key;
-
-      const itemsObject = {};
-      const baseTime = Date.now() - (sampleListItems.length * 60000);
-      
-      sampleListItems.forEach((item, idx) => {
-        const itemKey = `item_${idx + 1}`;
-        itemsObject[itemKey] = {
-          id: itemKey,
-          studentName: item.studentName,
-          studentClass: item.studentClass,
-          subject: item.subject,
-          itemValue: item.itemValue,
-          note: "Rekap List WA",
-          timestamp: baseTime + (idx * 60000)
-        };
-      });
-
-      const seedPayload = {
-        id: forumId,
-        title: "List Rekap Game Dimainkan Minggu Ini",
-        category: "List General",
-        targetClass: "Umum / Semua Kelas",
-        course: "Prodi Teknologi Permainan '26",
-        description: "Rekap daftar game yang sedang dimainkan mahasiswa prodi minggu ini. Silakan isi namamu agar kerekap dengan rapi.",
-        isPinned: true,
-        createdAt: Date.now(),
-        items: itemsObject,
-        chats: {
-          "c1": { id: "c1", senderName: "Harits", senderClass: "Kelas A Pagi", message: "Halo teman-teman, langsung isi list game kalian di sini ya!", timestamp: Date.now() - 300000 }
-        }
-      };
-
-      try {
-        await set(newForumRef, seedPayload);
-        showToast("21 Data Contoh Mahasiswa Berhasil Dimuat!", "success");
-      } catch (err) {
-        showToast("Gagal memuat sampel: " + err.message, "error");
-      }
-    };
 
     function showToast(message, type = 'info') {
       const container = document.getElementById('toastContainer');
