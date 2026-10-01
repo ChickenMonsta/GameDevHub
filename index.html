@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameDevRoom - Hub Mahasiswa Teknologi Permainan '26</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cozy: {
+              bg: '#fbf7ee',
+              green: '#88ab75',
+              greenDark: '#5c784f',
+              wood: '#eedec5',
+              woodBorder: '#c4a47c',
+              woodDark: '#8b5a2b',
+              sky: '#a2d2ff',
+              cream: '#fffdf9',
+              pastelPink: '#ffcad4',
+              accentOrange: '#f4a261',
+              charcoal: '#4a3e3d'
+            }
+          },
+          fontFamily: {
+            casual: ['Fredoka', 'Quicksand', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome Icons & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Fredoka', 'Quicksand', sans-serif;
+      background-color: #f6f0e2;
+      color: #4a3e3d;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(#88ab75 0.75px, transparent 0.75px), 
+        radial-gradient(#88ab75 0.75px, #f6f0e2 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+    }
+
+    /* Soft Moving Sky Banner */
+    .sky-cloud-banner {
+      background: linear-gradient(180deg, #b5e2fa 0%, #edf6f9 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cloud-pixel {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      animation: floatClouds linear infinite;
+    }
+
+    @keyframes floatClouds {
+      0% { transform: translateX(-150px); }
+      100% { transform: translateX(100vw); }
+    }
+
+    /* Cozy Card Aesthetics */
+    .cozy-card {
+      background: #fffdf9;
+      border: 3px solid #c4a47c;
+      border-radius: 20px;
+      box-shadow: 0 6px 0px #c4a47c, 0 10px 20px rgba(74, 62, 61, 0.08);
+      transition: all 0.2s ease;
+    }
+    
+    .cozy-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0px #c4a47c, 0 14px 24px rgba(74, 62, 61, 0.12);
+    }
+
+    .cozy-header-card {
+      background: #eedec5;
+      border: 3px solid #8b5a2b;
+      border-radius: 22px;
+      box-shadow: 0 6px 0px #8b5a2b;
+    }
+
+    .cozy-btn {
+      border: 2px solid #8b5a2b;
+      box-shadow: 0 4px 0px #8b5a2b;
+      transition: all 0.1s ease;
+    }
+    .cozy-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0px #8b5a2b;
+    }
+
+    .cozy-input {
+      background: #ffffff;
+      border: 2px solid #c4a47c;
+      border-radius: 12px;
+      color: #4a3e3d;
+      font-weight: 500;
+    }
+    .cozy-input:focus {
+      outline: none;
+      border-color: #88ab75;
+      box-shadow: 0 0 0 3px rgba(136, 171, 117, 0.3);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f6f0e2;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #c4a47c;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #88ab75;
+    }
+
+    @keyframes cozyBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    .pinned-bounce {
+      animation: cozyBounce 2s infinite ease-in-out;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-200">
+
+  <header class="sky-cloud-banner border-b-4 border-cozy-woodBorder py-6 px-4 lg:px-8 relative shadow-sm">
+    <div class="cloud-pixel h-6 w-20 top-2" style="animation-duration: 35s; animation-delay: 0s;"></div>
+    <div class="cloud-pixel h-8 w-28 top-8" style="animation-duration: 48s; animation-delay: -15s;"></div>
+    <div class="cloud-pixel h-5 w-16 top-14" style="animation-duration: 28s; animation-delay: -8s;"></div>
+
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="resetFilters()">
+        <div class="w-12 h-12 rounded-2xl bg-cozy-green border-2 border-cozy-woodDark flex items-center justify-center text-white text-2xl shadow-[0_4px_0_#5c784f]">
+          <i class="fa-solid fa-gamepad"></i>
+        </div>
+        <div>
+          <h1 class="font-extrabold text-2xl tracking-wide text-cozy-charcoal flex items-center gap-2">
+            GameDev<span class="text-cozy-greenDark">Room</span>
+            <span class="text-xs bg-cozy-wood px-2 py-0.5 rounded-full border border-cozy-woodBorder text-cozy-woodDark font-bold">Angkatan '26</span>
+          </h1>
+          <p class="text-xs text-slate-600 font-medium">Portal Diskusi & Rekap List Kolaboratif Mahasiswa Teknologi Permainan</p>
+        </div>
+      </div>
+
+      <!-- Action Nav Buttons -->
+      <div class="flex items-center space-x-3">
+        <button id="btnSeedData" onclick="seedSampleList()" class="hidden md:flex items-center space-x-2 text-xs bg-cozy-wood hover:bg-amber-200 text-cozy-woodDark font-bold px-3 py-2 rounded-xl border-2 border-cozy-woodBorder cozy-btn">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <span>Muat Contoh 21 Mahasiswa</span>
+        </button>
+
+        <button onclick="openCreateModal()" class="flex items-center space-x-2 bg-cozy-green hover:bg-emerald-600 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl border-2 border-cozy-greenDark cozy-btn">
+          <i class="fa-solid fa-plus-circle"></i>
+          <span>Buat Forum / List</span>
+        </button>
+
+        <button id="btnAdminAccess" onclick="toggleAdminModal()" class="flex items-center space-x-2 bg-cozy-cream hover:bg-amber-50 text-cozy-charcoal text-xs px-3 py-2.5 rounded-xl border-2 border-cozy-woodBorder cozy-btn">
+          <i id="adminLockIcon" class="fa-solid fa-lock text-cozy-accentOrange"></i>
+          <span id="adminStatusText" class="font-bold">Mode Admin</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6 w-full flex-grow">
+    
+    <!-- Notice Header Banner -->
+    <div class="cozy-header-card p-6 mb-8 relative">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-cozy-woodBorder text-cozy-woodDark text-xs font-bold mb-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            Terhubung Secara Realtime
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-cozy-charcoal">
+            🎮 Forum & Rekap List Mahasiswa
+          </h2>
+          <p class="text-cozy-woodDark text-xs sm:text-sm mt-1 max-w-2xl font-medium">
+            Tempat rekap tugas kelas, list kelompok PBL, absensi, hingga mabar prodi. Data tersimpan otomatis tanpa takut tertimpa di chat grup WhatsApp.
+          </p>
+        </div>
+
+        <!-- Live Counters -->
+        <div class="grid grid-cols-3 gap-3 min-w-[280px]">
+          <div class="bg-white/90 border-2 border-cozy-woodBorder p-3 rounded-2xl text-center shadow-sm">
+            <p class="text-[11px] text-slate-500 font-bold">Total Forum</p>
+            <p id="statTotalForums" class="text-xl font-extrabold text-cozy-greenDark">0</p>
+          </div>
+          <div class="bg-white/90 border-2 border-cozy-woodBorder p-3 rounded-2xl text-center shadow-sm">
+            <p class="text-[11px] text-slate-500 font-bold">Total Entri</p>
+            <p id="statTotalItems" class="text-xl font-extrabold text-cozy-accentOrange">0</p>
+          </div>
+          <div class="bg-white/90 border-2 border-cozy-woodBorder p-3 rounded-2xl text-center shadow-sm">
+            <p class="text-[11px] text-slate-500 font-bold">Kelas '26</p>
+            <p class="text-xs font-extrabold text-emerald-700 leading-tight mt-1">A Pagi, B Pagi,<br>A Malam</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between mb-6">
+      
+      <!-- Category Buttons -->
+      <div class="flex items-center space-x-1.5 overflow-x-auto pb-2 md:pb-0 text-xs sm:text-sm">
+        <button onclick="setCategoryFilter('all')" id="cat-all" class="cat-btn px-4 py-2 rounded-xl font-bold border-2 border-cozy-woodDark bg-cozy-green text-white shadow-sm">
+          <i class="fa-solid fa-layer-group mr-1.5"></i>Semua Forum
+        </button>
+        <button onclick="setCategoryFilter('List General')" id="cat-List General" class="cat-btn px-4 py-2 rounded-xl font-bold text-cozy-charcoal bg-white border-2 border-cozy-woodBorder hover:bg-cozy-wood transition">
+          <i class="fa-solid fa-list-check mr-1.5 text-cozy-green"></i>Daftar List
+        </button>
+        <button onclick="setCategoryFilter('Rekap Tugas')" id="cat-Rekap Tugas" class="cat-btn px-4 py-2 rounded-xl font-bold text-cozy-charcoal bg-white border-2 border-cozy-woodBorder hover:bg-cozy-wood transition">
+          <i class="fa-solid fa-book-open mr-1.5 text-cozy-accentOrange"></i>Rekap Tugas
+        </button>
+        <button onclick="setCategoryFilter('Diskusi Umum')" id="cat-Diskusi Umum" class="cat-btn px-4 py-2 rounded-xl font-bold text-cozy-charcoal bg-white border-2 border-cozy-woodBorder hover:bg-cozy-wood transition">
+          <i class="fa-solid fa-comments mr-1.5 text-sky-500"></i>Diskusi Umum
+        </button>
+        <button onclick="setCategoryFilter('Pengumuman')" id="cat-Pengumuman" class="cat-btn px-4 py-2 rounded-xl font-bold text-cozy-charcoal bg-white border-2 border-cozy-woodBorder hover:bg-cozy-wood transition">
+          <i class="fa-solid fa-bullhorn mr-1.5 text-pink-500"></i>Pengumuman
+        </button>
+      </div>
+
+      <!-- Class Dropdown & Search -->
+      <div class="flex items-center space-x-3 w-full md:w-auto">
+        <select id="selectClassFilter" onchange="renderForums()" class="cozy-input text-xs sm:text-sm px-3 py-2 cursor-pointer font-bold">
+          <option value="all">Semua Kelas Angkatan '26</option>
+          <option value="Kelas A Pagi">Kelas A Pagi</option>
+          <option value="Kelas B Pagi">Kelas B Pagi</option>
+          <option value="Kelas A Malam">Kelas A Malam</option>
+          <option value="Umum / Semua Kelas">Gabungan (Semua Kelas)</option>
+        </select>
+
+        <div class="relative flex-grow md:w-64">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input type="text" id="searchInput" oninput="renderForums()" placeholder="Cari forum, nama, mata kuliah..." class="w-full cozy-input text-xs sm:text-sm pl-9 pr-3 py-2">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Forum Cards Grid Container -->
+    <div id="forumListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="cozy-card p-8 rounded-2xl text-center text-slate-500 md:col-span-2">
+        <i class="fa-solid fa-spinner fa-spin text-3xl text-cozy-green mb-3"></i>
+        <p class="font-bold">Memuat data forum...</p>
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- MODAL 1: Create New Forum Topic -->
+  <div id="modalCreateForum" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="cozy-card w-full max-w-lg p-6 relative">
+      <button onclick="closeModal('modalCreateForum')" class="absolute top-4 right-4 text-slate-400 hover:text-cozy-charcoal text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center space-x-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-cozy-green text-white flex items-center justify-center text-lg border-2 border-cozy-greenDark">
+          <i class="fa-solid fa-pen-ruler"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-extrabold text-cozy-charcoal">Buat Forum / List Baru</h3>
+          <p class="text-xs text-slate-500 font-medium">Buat pengumuman, rekap tugas, atau list kolaboratif</p>
+        </div>
+      </div>
+
+      <form id="formCreateForum" onsubmit="handleCreateForum(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-cozy-charcoal mb-1">Judul Forum / List *</label>
+          <input type="text" id="newTitle" required placeholder="Contoh: Rekap Tugas Pemrograman Permainan 1" class="w-full cozy-input px-3 py-2 text-sm">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-cozy-charcoal mb-1">Kategori *</label>
+            <select id="newCategory" required class="w-full cozy-input px-3 py-2 text-sm bg-white">
+              <option value="List General">Daftar / List Kolaboratif</option>
+              <option value="Rekap Tugas">Rekap Tugas</option>
+              <option value="Diskusi Umum">Diskusi Umum</option>
+              <option value="Pengumuman">Pengumuman Prodi</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-cozy-charcoal mb-1">Target Kelas *</label>
+            <select id="newTargetClass" required class="w-full cozy-input px-3 py-2 text-sm bg-white">
+              <option value="Umum / Semua Kelas">Umum / Semua Kelas</option>
+              <option value="Kelas A Pagi">Kelas A Pagi</option>
+              <option value="Kelas B Pagi">Kelas B Pagi</option>
+              <option value="Kelas A Malam">Kelas A Malam</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-cozy-charcoal mb-1">Mata Kuliah / Dosen (Opsional)</label>
+          <input type="text" id="newCourse" placeholder="Contoh: Desain Permainan / Pak Dosen" class="w-full cozy-input px-3 py-2 text-sm">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-cozy-charcoal mb-1">Deskripsi Tambahan *</label>
+          <textarea id="newDescription" rows="3" required placeholder="Tuliskan petunjuk, detail tugas, atau keterangan..." class="w-full cozy-input px-3 py-2 text-sm"></textarea>
+        </div>
+
+        <!-- Admin Pin Option -->
+        <div id="adminPinOption" class="hidden flex items-center space-x-2 bg-amber-100 p-3 rounded-xl border border-cozy-woodBorder">
+          <input type="checkbox" id="checkPinPost" class="w-4 h-4 accent-cozy-green rounded">
+          <label for="checkPinPost" class="text-xs text-cozy-woodDark font-bold cursor-pointer">
+            📌 Sematkan Forum Ini di Paling Atas (Pin Admin)
+          </label>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-2">
+          <button type="button" onclick="closeModal('modalCreateForum')" class="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-xl">Batal</button>
+          <button type="submit" class="px-5 py-2 text-xs font-bold bg-cozy-green hover:bg-emerald-600 text-white rounded-xl border-2 border-cozy-greenDark cozy-btn">Publikasikan Forum</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- MODAL 2: Add Entry to Specific Forum List -->
+  <div id="modalAddEntry" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="cozy-card w-full max-w-md p-6 relative">
+      <button onclick="closeModal('modalAddEntry')" class="absolute top-4 right-4 text-slate-400 hover:text-cozy-charcoal text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center space-x-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-cozy-accentOrange text-white flex items-center justify-center text-lg border-2 border-amber-700">
+          <i class="fa-solid fa-user-plus"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-extrabold text-cozy-charcoal">Tambah Data ke List</h3>
+          <p id="entryForumTitleTarget" class="text-xs text-cozy-greenDark font-bold truncate max-w-[260px]"></p>
+        </div>
+      </div>
+
+      <form id="formAddEntry" onsubmit="handleAddEntrySubmit(event)" class="space-y-4">
+        <input type="hidden" id="entryForumId">
+
+        <div>
+          <label class="block text-xs font-bold text-cozy-charcoal mb-1">Nama Mahasiswa *</label>
+          <input type="text" id="entryStudentName" required placeholder="Contoh: Harits / Icha" class="w-full cozy-input px-3 py-2 text-sm">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-cozy-charcoal mb-1">Kelas *</label>
+            <select id="entryStudentClass" required class="w-full cozy-input px-3 py-2 text-sm bg-white">
+              <option value="Kelas A Pagi">Kelas A Pagi</option>
+              <option value="Kelas B Pagi">Kelas B Pagi</option>
+              <option value="Kelas A Malam">Kelas A Malam</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-cozy-charcoal mb-1">Topik / Subjek *</label>
+            <input type="text" id="entrySubject" required placeholder="Contoh: Kelompok 1 / Judul Game" class="w-full cozy-input px-3 py-2 text-sm">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-cozy-charcoal mb-1">Isian / Status / Progress *</label>
+          <input type="text" id="entryValue" required placeholder="Contoh: Selesai Bab 2 / Baldur's Gate 3" class="w-full cozy-input px-3 py-2 text-sm">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-cozy-charcoal mb-1">Catatan / Link Repo (Opsional)</label>
+          <input type="text" id="entryNote" placeholder="Contoh: github.com/... / Catatan tambahan" class="w-full cozy-input px-3 py-2 text-sm">
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-2">
+          <button type="button" onclick="closeModal('modalAddEntry')" class="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-xl">Batal</button>
+          <button type="submit" class="px-5 py-2 text-xs font-bold bg-cozy-accentOrange text-white rounded-xl border-2 border-amber-800 cozy-btn">Simpan ke List</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- MODAL 3: Forum Detail & Chat Room -->
+  <div id="modalForumRoom" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-5 hidden">
+    <div class="cozy-card w-full max-w-3xl max-h-[92vh] flex flex-col p-4 sm:p-6 relative overflow-hidden">
+      <button onclick="closeModal('modalForumRoom')" class="absolute top-4 right-4 text-slate-400 hover:text-cozy-charcoal text-lg z-10">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Forum Header Detail -->
+      <div class="border-b-2 border-cozy-woodBorder pb-4 mb-4">
+        <div class="flex flex-wrap items-center gap-2 mb-1">
+          <span id="roomCategoryBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cozy-wood text-cozy-woodDark border border-cozy-woodBorder"></span>
+          <span id="roomClassBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border"></span>
+          <span id="roomCourseBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200"></span>
+        </div>
+        <h2 id="roomTitle" class="text-xl sm:text-2xl font-extrabold text-cozy-charcoal"></h2>
+        <p id="roomDescription" class="text-xs sm:text-sm text-slate-600 mt-1"></p>
+      </div>
+
+      <!-- Tab Buttons -->
+      <div class="flex border-b-2 border-cozy-woodBorder mb-3">
+        <button id="tabBtnList" onclick="switchRoomTab('list')" class="px-4 py-2 font-bold text-xs sm:text-sm border-b-4 border-cozy-green text-cozy-greenDark">
+          <i class="fa-solid fa-list-check mr-1.5"></i>List Kolaboratif (<span id="roomListCount">0</span>)
+        </button>
+        <button id="tabBtnChat" onclick="switchRoomTab('chat')" class="px-4 py-2 font-bold text-xs sm:text-sm border-b-4 border-transparent text-slate-500 hover:text-cozy-charcoal">
+          <i class="fa-solid fa-comments mr-1.5"></i>Diskusi & Komentar (<span id="roomChatCount">0</span>)
+        </button>
+      </div>
+
+      <!-- TAB 1: Collaborative List -->
+      <div id="tabContentList" class="flex-grow overflow-y-auto pr-1 space-y-3 min-h-[250px]">
+        <div class="flex items-center justify-between bg-amber-50 p-3 rounded-xl border border-cozy-woodBorder">
+          <span class="text-xs font-bold text-cozy-woodDark">Isi List Mahasiswa</span>
+          <div class="flex items-center space-x-2">
+            <button id="btnCopyWaRoom" class="text-xs bg-cozy-wood hover:bg-amber-200 text-cozy-woodDark font-bold px-3 py-1.5 rounded-lg border border-cozy-woodBorder">
+              <i class="fa-solid fa-copy mr-1"></i> Salin List WA
+            </button>
+            <button id="btnAddEntryRoom" class="text-xs bg-cozy-green hover:bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-lg border border-cozy-greenDark">
+              <i class="fa-solid fa-plus mr-1"></i> Tambah Nama
+            </button>
+          </div>
+        </div>
+
+        <div id="roomItemsContainer" class="space-y-2">
+          <!-- Dynamic Items -->
+        </div>
+      </div>
+
+      <!-- TAB 2: Chat Room -->
+      <div id="tabContentChat" class="flex-grow flex flex-col min-h-[280px] hidden">
+        <div id="pinnedChatBox" class="hidden mb-2 bg-pink-50 border-2 border-pink-300 rounded-xl p-2.5 flex items-start justify-between">
+          <div class="flex items-start space-x-2">
+            <i class="fa-solid fa-thumbtack text-pink-500 text-xs mt-1"></i>
+            <div>
+              <p class="text-[10px] font-bold text-pink-600 uppercase">Pesan Disematkan Admin</p>
+              <p id="pinnedChatText" class="text-xs font-bold text-cozy-charcoal"></p>
+              <p id="pinnedChatAuthor" class="text-[10px] text-slate-500"></p>
+            </div>
+          </div>
+          <button id="btnUnpinChatBtn" onclick="unpinChatMsg()" class="hidden text-xs text-pink-600 hover:underline font-bold">Unpin</button>
+        </div>
+
+        <div id="chatMessagesContainer" class="flex-grow overflow-y-auto pr-2 space-y-2.5 p-2 bg-cozy-bg rounded-xl border-2 border-cozy-woodBorder max-h-[220px]">
+          <!-- Dynamic Chat Messages -->
+        </div>
+
+        <form onsubmit="handleSendChat(event)" class="mt-3 flex flex-col gap-2">
+          <div class="grid grid-cols-3 gap-2">
+            <input type="text" id="chatSenderName" required placeholder="Nama Kamu *" class="cozy-input px-3 py-1.5 text-xs col-span-1">
+            <select id="chatSenderClass" required class="cozy-input px-3 py-1.5 text-xs col-span-2 bg-white font-bold">
+              <option value="Kelas A Pagi">Kelas A Pagi</option>
+              <option value="Kelas B Pagi">Kelas B Pagi</option>
+              <option value="Kelas A Malam">Kelas A Malam</option>
+            </select>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input type="text" id="chatInputMessage" required placeholder="Tulis komentar atau pertanyaan..." class="w-full cozy-input px-3 py-2 text-xs">
+            <button type="submit" class="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl border-2 border-sky-700 cozy-btn shrink-0">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- MODAL 4: Admin Passcode Login -->
+  <div id="modalAdminAuth" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="cozy-card w-full max-w-sm p-6 text-center relative">
+      <button onclick="closeModal('modalAdminAuth')" class="absolute top-4 right-4 text-slate-400 hover:text-cozy-charcoal text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="w-12 h-12 rounded-2xl bg-amber-100 border-2 border-cozy-woodBorder text-cozy-woodDark mx-auto flex items-center justify-center text-xl mb-3">
+        <i class="fa-solid fa-key"></i>
+      </div>
+      <h3 class="text-lg font-extrabold text-cozy-charcoal">Akses Admin</h3>
+      <p class="text-xs text-slate-500 mb-4 font-medium">Masukkan kata sandi admin untuk fitur kelola pin & hapus</p>
+
+      <form onsubmit="handleAdminAuth(event)" class="space-y-4">
+        <div>
+          <input type="password" id="adminPasscode" required placeholder="Sandi Admin..." class="w-full cozy-input px-3 py-2 text-center text-sm font-mono tracking-widest">
+        </div>
+        <p id="adminAuthError" class="text-xs text-rose-500 font-bold hidden">Sandi salah!</p>
+        <button type="submit" class="w-full py-2.5 text-xs font-bold bg-cozy-woodDark text-white rounded-xl border-2 border-amber-950 cozy-btn">
+          Verifikasi Akses
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="bg-cozy-wood border-t-4 border-cozy-woodBorder py-6 px-4 text-center text-xs text-cozy-woodDark font-bold mt-12">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center space-x-2">
+        <i class="fa-solid fa-heart text-rose-500"></i>
+        <span>GameDevRoom © 2026 - Prodi Teknologi Permainan</span>
+      </div>
+      <div>Portal Forum & Rekap List Mahasiswa</div>
+    </div>
+  </footer>
+
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+    import { 
+      getDatabase, ref, set, push, onValue, remove, update 
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAUce_re3loUmQDJz5fnyI2eKJIubcjlFo",
+      authDomain: "data-mahasiswa-f6953.firebaseapp.com",
+      databaseURL: "https://data-mahasiswa-f6953-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "data-mahasiswa-f6953",
+      storageBucket: "data-mahasiswa-f6953.firebasestorage.app",
+      messagingSenderId: "431956119199",
+      appId: "1:431956119199:web:932c766d7286a26b865caa"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    let forumsData = {};
+    let activeCategory = 'all';
+    let isAdminLoggedIn = false;
+    let activeRoomForumId = null;
+    const ADMIN_PASS = "gamedev123";
+
+    window.openCreateModal = () => document.getElementById('modalCreateForum').classList.remove('hidden');
+    window.closeModal = (id) => document.getElementById(id).classList.add('hidden');
+    
+    window.toggleAdminModal = () => {
+      if(isAdminLoggedIn) {
+        isAdminLoggedIn = false;
+        updateAdminUI();
+        showToast("Logout dari mode Admin", "info");
+      } else {
+        document.getElementById('modalAdminAuth').classList.remove('hidden');
+      }
+    };
+
+    window.handleAdminAuth = (e) => {
+      e.preventDefault();
+      const pwd = document.getElementById('adminPasscode').value;
+      if (pwd === ADMIN_PASS) {
+        isAdminLoggedIn = true;
+        updateAdminUI();
+        closeModal('modalAdminAuth');
+        document.getElementById('adminPasscode').value = '';
+        showToast("Akses Admin Berhasil!", "success");
+      } else {
+        document.getElementById('adminAuthError').classList.remove('hidden');
+      }
+    };
+
+    function updateAdminUI() {
+      const icon = document.getElementById('adminLockIcon');
+      const text = document.getElementById('adminStatusText');
+      const adminPinOpt = document.getElementById('adminPinOption');
+
+      if (isAdminLoggedIn) {
+        icon.className = "fa-solid fa-key text-emerald-600";
+        text.innerText = "Admin: Aktif";
+        adminPinOpt.classList.remove('hidden');
+      } else {
+        icon.className = "fa-solid fa-lock text-cozy-accentOrange";
+        text.innerText = "Mode Admin";
+        adminPinOpt.classList.add('hidden');
+      }
+      renderForums();
+      if(activeRoomForumId) renderRoomContent();
+    }
+
+    window.setCategoryFilter = (cat) => {
+      activeCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.className = "cat-btn px-4 py-2 rounded-xl font-bold text-cozy-charcoal bg-white border-2 border-cozy-woodBorder hover:bg-cozy-wood transition";
+      });
+      const activeBtn = document.getElementById(`cat-${cat}`);
+      if(activeBtn) {
+        activeBtn.className = "cat-btn px-4 py-2 rounded-xl font-bold border-2 border-cozy-woodDark bg-cozy-green text-white shadow-sm";
+      }
+      renderForums();
+    };
+
+    window.resetFilters = () => {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('selectClassFilter').value = 'all';
+      setCategoryFilter('all');
+    };
+
+    window.handleCreateForum = async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('newTitle').value;
+      const category = document.getElementById('newCategory').value;
+      const targetClass = document.getElementById('newTargetClass').value;
+      const course = document.getElementById('newCourse').value || 'Umum';
+      const description = document.getElementById('newDescription').value;
+      const isPinned = isAdminLoggedIn && document.getElementById('checkPinPost').checked;
+
+      const newForumRef = push(ref(db, 'forums'));
+      const forumPayload = {
+        id: newForumRef.key,
+        title,
+        category,
+        targetClass,
+        course,
+        description,
+        isPinned: isPinned || false,
+        createdAt: Date.now(),
+        items: {},
+        chats: {}
+      };
+
+      try {
+        await set(newForumRef, forumPayload);
+        closeModal('modalCreateForum');
+        document.getElementById('formCreateForum').reset();
+        showToast("Forum berhasil dipublikasikan!", "success");
+      } catch (err) {
+        showToast("Gagal membuat forum: " + err.message, "error");
+      }
+    };
+
+    window.openAddEntryModal = (forumId, forumTitle) => {
+      document.getElementById('entryForumId').value = forumId;
+      document.getElementById('entryForumTitleTarget').innerText = forumTitle;
+      document.getElementById('modalAddEntry').classList.remove('hidden');
+    };
+
+    window.handleAddEntrySubmit = async (e) => {
+      e.preventDefault();
+      const forumId = document.getElementById('entryForumId').value;
+      const studentName = document.getElementById('entryStudentName').value;
+      const studentClass = document.getElementById('entryStudentClass').value;
+      const subject = document.getElementById('entrySubject').value;
+      const itemValue = document.getElementById('entryValue').value;
+      const note = document.getElementById('entryNote').value;
+
+      const itemsRef = push(ref(db, `forums/${forumId}/items`));
+      const entryPayload = {
+        id: itemsRef.key,
+        studentName,
+        studentClass,
+        subject,
+        itemValue,
+        note,
+        timestamp: Date.now()
+      };
+
+      try {
+        await set(itemsRef, entryPayload);
+        closeModal('modalAddEntry');
+        document.getElementById('formAddEntry').reset();
+        showToast(`Data ${studentName} berhasil ditambahkan!`, "success");
+      } catch (err) {
+        showToast("Gagal menyimpan: " + err.message, "error");
+      }
+    };
+
+    window.copyListToClipboard = (forumId) => {
+      const forum = forumsData[forumId];
+      if (!forum) return;
+
+      let itemsArr = [];
+      if (forum.items) {
+        itemsArr = Object.values(forum.items).sort((a, b) => a.timestamp - b.timestamp);
+      }
+
+      let text = `*${forum.title.toUpperCase()}*\n`;
+      text += `📌 Target: ${forum.targetClass} | Matkul: ${forum.course}\n`;
+      text += `------------------------------------\n`;
+
+      if (itemsArr.length === 0) {
+        text += `(Belum ada mahasiswa yang mengisi list)\n`;
+      } else {
+        itemsArr.forEach((item, index) => {
+          text += `${index + 1}. ${item.studentName} (${item.studentClass}) : ${item.itemValue}`;
+          if (item.subject) text += ` [${item.subject}]`;
+          if (item.note) text += ` (${item.note})`;
+          text += `\n`;
+        });
+      }
+
+      text += `------------------------------------\n`;
+      text += `✨ GameDevRoom Hub Mahasiswa Teknologi Permainan`;
+
+      const dummy = document.createElement("textarea");
+      document.body.appendChild(dummy);
+      dummy.value = text;
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+
+      showToast("List disalin! Tinggal tempel di grup WA", "success");
+    };
+
+    window.togglePinForum = async (forumId, currentStatus) => {
+      if (!isAdminLoggedIn) return;
+      try {
+        await update(ref(db, `forums/${forumId}`), { isPinned: !currentStatus });
+        showToast(currentStatus ? "Pin dicopot" : "Forum disematkan!", "info");
+      } catch (err) {
+        showToast("Error update pin: " + err.message, "error");
+      }
+    };
+
+    window.deleteForum = async (forumId) => {
+      if (!isAdminLoggedIn) return;
+      if (confirm("Hapus forum ini beserta isian dan komentar di dalamnya?")) {
+        try {
+          await remove(ref(db, `forums/${forumId}`));
+          if (activeRoomForumId === forumId) closeModal('modalForumRoom');
+          showToast("Forum berhasil dihapus", "info");
+        } catch (err) {
+          showToast("Gagal menghapus: " + err.message, "error");
+        }
+      }
+    };
+
+    window.deleteListItem = async (forumId, itemId) => {
+      if (!isAdminLoggedIn) return;
+      try {
+        await remove(ref(db, `forums/${forumId}/items/${itemId}`));
+        showToast("Item list dihapus admin", "info");
+      } catch (err) {
+        showToast("Gagal hapus item: " + err.message, "error");
+      }
+    };
+
+    window.openForumRoom = (forumId) => {
+      activeRoomForumId = forumId;
+      document.getElementById('modalForumRoom').classList.remove('hidden');
+      switchRoomTab('list');
+      renderRoomContent();
+    };
+
+    window.switchRoomTab = (tab) => {
+      const listBtn = document.getElementById('tabBtnList');
+      const chatBtn = document.getElementById('tabBtnChat');
+      const listContent = document.getElementById('tabContentList');
+      const chatContent = document.getElementById('tabContentChat');
+
+      if (tab === 'list') {
+        listBtn.className = "px-4 py-2 font-bold text-xs sm:text-sm border-b-4 border-cozy-green text-cozy-greenDark";
+        chatBtn.className = "px-4 py-2 font-bold text-xs sm:text-sm border-b-4 border-transparent text-slate-500 hover:text-cozy-charcoal";
+        listContent.classList.remove('hidden');
+        chatContent.classList.add('hidden');
+      } else {
+        chatBtn.className = "px-4 py-2 font-bold text-xs sm:text-sm border-b-4 border-sky-500 text-sky-600";
+        listBtn.className = "px-4 py-2 font-bold text-xs sm:text-sm border-b-4 border-transparent text-slate-500 hover:text-cozy-charcoal";
+        chatContent.classList.remove('hidden');
+        listContent.classList.add('hidden');
+      }
+    };
+
+    window.handleSendChat = async (e) => {
+      e.preventDefault();
+      if (!activeRoomForumId) return;
+
+      const name = document.getElementById('chatSenderName').value;
+      const studentClass = document.getElementById('chatSenderClass').value;
+      const message = document.getElementById('chatInputMessage').value;
+
+      const chatRef = push(ref(db, `forums/${activeRoomForumId}/chats`));
+      const chatPayload = {
+        id: chatRef.key,
+        senderName: name,
+        senderClass: studentClass,
+        message,
+        timestamp: Date.now()
+      };
+
+      try {
+        await set(chatRef, chatPayload);
+        document.getElementById('chatInputMessage').value = '';
+      } catch (err) {
+        showToast("Gagal mengirim pesan: " + err.message, "error");
+      }
+    };
+
+    window.pinChatMsg = async (chatId, message, author) => {
+      if (!isAdminLoggedIn || !activeRoomForumId) return;
+      try {
+        await update(ref(db, `forums/${activeRoomForumId}`), {
+          pinnedChat: { chatId, message, author }
+        });
+        showToast("Pesan disematkan di forum ini", "success");
+      } catch (err) {
+        showToast("Gagal pin chat: " + err.message, "error");
+      }
+    };
+
+    window.unpinChatMsg = async () => {
+      if (!isAdminLoggedIn || !activeRoomForumId) return;
+      try {
+        await update(ref(db, `forums/${activeRoomForumId}`), { pinnedChat: null });
+        showToast("Pin pesan dicopot", "info");
+      } catch (err) {
+        showToast("Gagal unpin chat", "error");
+      }
+    };
+
+    window.deleteChatMsg = async (chatId) => {
+      if (!isAdminLoggedIn || !activeRoomForumId) return;
+      try {
+        await remove(ref(db, `forums/${activeRoomForumId}/chats/${chatId}`));
+        showToast("Pesan dihapus admin", "info");
+      } catch (err) {
+        showToast("Gagal hapus pesan", "error");
+      }
+    };
+
+    function renderRoomContent() {
+      if (!activeRoomForumId || !forumsData[activeRoomForumId]) return;
+      const forum = forumsData[activeRoomForumId];
+
+      document.getElementById('roomTitle').innerText = forum.title;
+      document.getElementById('roomDescription').innerText = forum.description;
+      document.getElementById('roomCategoryBadge').innerText = forum.category;
+      document.getElementById('roomClassBadge').innerText = forum.targetClass;
+      document.getElementById('roomCourseBadge').innerText = forum.course || 'Umum';
+
+      document.getElementById('btnCopyWaRoom').onclick = () => copyListToClipboard(forum.id);
+      document.getElementById('btnAddEntryRoom').onclick = () => openAddEntryModal(forum.id, forum.title);
+
+      const itemsArr = forum.items ? Object.values(forum.items).sort((a, b) => a.timestamp - b.timestamp) : [];
+      document.getElementById('roomListCount').innerText = itemsArr.length;
+
+      const itemsContainer = document.getElementById('roomItemsContainer');
+      if (itemsArr.length === 0) {
+        itemsContainer.innerHTML = `<p class="text-center text-xs text-slate-400 py-6">Belum ada entri list.</p>`;
+      } else {
+        itemsContainer.innerHTML = itemsArr.map((item, index) => `
+          <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-cozy-woodBorder text-xs sm:text-sm">
+            <div class="flex items-center space-x-2 overflow-hidden">
+              <span class="font-bold text-cozy-greenDark w-5 shrink-0">${index + 1}.</span>
+              <span class="font-bold text-cozy-charcoal shrink-0">${item.studentName}</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 border shrink-0">${item.studentClass}</span>
+              <span class="text-slate-600 font-medium truncate">${item.itemValue}</span>
+              ${item.subject ? `<span class="text-[11px] text-cozy-greenDark italic truncate">[${item.subject}]</span>` : ''}
+              ${item.note ? `<span class="text-[11px] text-slate-400 truncate">(${item.note})</span>` : ''}
+            </div>
+            ${isAdminLoggedIn ? `
+              <button onclick="deleteListItem('${forum.id}', '${item.id}')" title="Hapus item" class="text-rose-500 hover:text-rose-700 text-xs px-1">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            ` : ''}
+          </div>
+        `).join('');
+      }
+
+      const chatsArr = forum.chats ? Object.values(forum.chats).sort((a, b) => a.timestamp - b.timestamp) : [];
+      document.getElementById('roomChatCount').innerText = chatsArr.length;
+
+      const pinnedBox = document.getElementById('pinnedChatBox');
+      const unpinBtn = document.getElementById('btnUnpinChatBtn');
+      if (forum.pinnedChat) {
+        pinnedBox.classList.remove('hidden');
+        document.getElementById('pinnedChatText').innerText = forum.pinnedChat.message;
+        document.getElementById('pinnedChatAuthor').innerText = `— ${forum.pinnedChat.author}`;
+        if (isAdminLoggedIn) unpinBtn.classList.remove('hidden');
+        else unpinBtn.classList.add('hidden');
+      } else {
+        pinnedBox.classList.add('hidden');
+      }
+
+      const chatsContainer = document.getElementById('chatMessagesContainer');
+      if (chatsArr.length === 0) {
+        chatsContainer.innerHTML = `<p class="text-center text-xs text-slate-400 py-8">Belum ada diskusi. Kirim pertanyaan atau tanggapan pertama!</p>`;
+      } else {
+        chatsContainer.innerHTML = chatsArr.map(c => `
+          <div class="bg-white p-2.5 rounded-xl border border-cozy-woodBorder text-xs relative group">
+            <div class="flex items-center justify-between mb-1">
+              <div class="flex items-center space-x-1.5">
+                <span class="font-extrabold text-cozy-charcoal">${c.senderName}</span>
+                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-cozy-wood text-cozy-woodDark border">${c.senderClass}</span>
+              </div>
+              <div class="flex items-center space-x-1">
+                <span class="text-[10px] text-slate-400">${new Date(c.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                ${isAdminLoggedIn ? `
+                  <button onclick="pinChatMsg('${c.id}', '${c.message.replace(/'/g, "\\'")}', '${c.senderName}')" title="Pin pesan ini" class="text-pink-500 hover:text-pink-700 px-1">
+                    <i class="fa-solid fa-thumbtack"></i>
+                  </button>
+                  <button onclick="deleteChatMsg('${c.id}')" title="Hapus pesan" class="text-rose-500 hover:text-rose-700 px-1">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+            <p class="text-slate-700 font-medium">${c.message}</p>
+          </div>
+        `).join('');
+
+        chatsContainer.scrollTop = chatsContainer.scrollHeight;
+      }
+    }
+
+    function renderForums() {
+      const container = document.getElementById('forumListContainer');
+      const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+      const classFilter = document.getElementById('selectClassFilter').value;
+
+      if (!forumsData || Object.keys(forumsData).length === 0) {
+        container.innerHTML = `
+          <div class="cozy-card p-10 text-center md:col-span-2">
+            <div class="w-16 h-16 bg-cozy-wood border-2 border-cozy-woodBorder rounded-2xl flex items-center justify-center mx-auto text-cozy-woodDark text-2xl mb-3">
+              <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <h3 class="text-lg font-bold text-cozy-charcoal mb-1">Belum Ada Forum</h3>
+            <p class="text-xs text-slate-500 mb-4">Klik tombol di bawah untuk memuat data awal contoh 21 mahasiswa atau buat forum baru.</p>
+            <button onclick="seedSampleList()" class="bg-cozy-green text-white text-xs font-bold px-4 py-2.5 rounded-xl border-2 border-cozy-greenDark cozy-btn">
+              Muat Contoh 21 Mahasiswa
+            </button>
+          </div>
+        `;
+        document.getElementById('btnSeedData').classList.remove('hidden');
+        document.getElementById('statTotalForums').innerText = '0';
+        document.getElementById('statTotalItems').innerText = '0';
+        return;
+      }
+
+      document.getElementById('btnSeedData').classList.add('hidden');
+
+      let forumsArray = Object.values(forumsData);
+
+      if (activeCategory !== 'all') {
+        forumsArray = forumsArray.filter(f => f.category === activeCategory);
+      }
+      if (classFilter !== 'all') {
+        forumsArray = forumsArray.filter(f => f.targetClass === classFilter || f.targetClass === 'Umum / Semua Kelas');
+      }
+      if (searchQuery) {
+        forumsArray = forumsArray.filter(f => {
+          const matchTitle = f.title.toLowerCase().includes(searchQuery);
+          const matchDesc = f.description && f.description.toLowerCase().includes(searchQuery);
+          const matchCourse = f.course && f.course.toLowerCase().includes(searchQuery);
+          const matchItems = f.items && Object.values(f.items).some(i => 
+            i.studentName.toLowerCase().includes(searchQuery) ||
+            i.itemValue.toLowerCase().includes(searchQuery)
+          );
+          return matchTitle || matchDesc || matchCourse || matchItems;
+        });
+      }
+
+      forumsArray.sort((a, b) => {
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+        return (b.createdAt || 0) - (a.createdAt || 0);
+      });
+
+      document.getElementById('statTotalForums').innerText = Object.keys(forumsData).length;
+      let totalItems = 0;
+      Object.values(forumsData).forEach(f => { if(f.items) totalItems += Object.keys(f.items).length; });
+      document.getElementById('statTotalItems').innerText = totalItems;
+
+      if (forumsArray.length === 0) {
+        container.innerHTML = `
+          <div class="cozy-card p-8 text-center text-slate-500 md:col-span-2">
+            <i class="fa-solid fa-magnifying-glass text-2xl mb-2 text-cozy-green"></i>
+            <p class="text-sm font-bold">Tidak ada forum yang sesuai dengan filter atau kata kunci pencarian.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = forumsArray.map(forum => {
+        let itemsList = forum.items ? Object.values(forum.items) : [];
+        itemsList.sort((a, b) => a.timestamp - b.timestamp);
+        let chatCount = forum.chats ? Object.keys(forum.chats).length : 0;
+
+        return `
+          <div class="cozy-card p-5 sm:p-6 flex flex-col justify-between relative cursor-pointer" onclick="openForumRoom('${forum.id}')">
+            
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  ${forum.isPinned ? `
+                    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-pink-500 text-white border border-pink-700 flex items-center gap-1 pinned-bounce">
+                      <i class="fa-solid fa-thumbtack text-[10px]"></i> PINNED
+                    </span>
+                  ` : ''}
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cozy-wood text-cozy-woodDark border border-cozy-woodBorder">
+                    ${forum.category}
+                  </span>
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border">
+                    ${forum.targetClass}
+                  </span>
+                </div>
+
+                ${isAdminLoggedIn ? `
+                  <div onclick="event.stopPropagation()" class="flex items-center space-x-1 bg-amber-50 px-2 py-1 rounded-lg border border-cozy-woodBorder">
+                    <button onclick="togglePinForum('${forum.id}', ${forum.isPinned})" title="Pin/Unpin" class="text-xs px-1 text-pink-600 hover:text-pink-800">
+                      <i class="fa-solid fa-thumbtack"></i>
+                    </button>
+                    <button onclick="deleteForum('${forum.id}')" title="Hapus Forum" class="text-xs px-1 text-rose-600 hover:text-rose-800">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+                ` : ''}
+              </div>
+
+              <h3 class="text-lg font-extrabold text-cozy-charcoal mb-1 leading-snug">${forum.title}</h3>
+              <p class="text-xs text-slate-600 mb-4 line-clamp-2">${forum.description}</p>
+
+              <div class="bg-amber-50/60 border-2 border-cozy-woodBorder rounded-xl p-3 mb-4">
+                <div class="flex items-center justify-between border-b border-cozy-woodBorder pb-1.5 mb-2">
+                  <span class="text-xs font-bold text-cozy-woodDark">
+                    <i class="fa-solid fa-list-ol text-cozy-green mr-1"></i> ${itemsList.length} Entri List
+                  </span>
+                  <span class="text-[10px] text-cozy-greenDark font-bold hover:underline">Buka Diskusi & Room &rarr;</span>
+                </div>
+
+                ${itemsList.length === 0 ? `
+                  <p class="text-[11px] text-slate-400 text-center py-2 italic">Belum ada entri. Klik untuk mengisi nama!</p>
+                ` : `
+                  <div class="space-y-1 max-h-36 overflow-hidden">
+                    ${itemsList.slice(0, 4).map((item, idx) => `
+                      <div class="flex items-center justify-between text-xs text-cozy-charcoal font-medium truncate">
+                        <span class="truncate"><b class="text-cozy-greenDark">${idx + 1}.</b> ${item.studentName} (${item.studentClass}) : ${item.itemValue}</span>
+                      </div>
+                    `).join('')}
+                    ${itemsList.length > 4 ? `
+                      <p class="text-[10px] text-cozy-woodDark font-bold text-center pt-1">+ ${itemsList.length - 4} entri lainnya...</p>
+                    ` : ''}
+                  </div>
+                `}
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-cozy-woodBorder" onclick="event.stopPropagation()">
+              <button onclick="openAddEntryModal('${forum.id}', '${forum.title.replace(/'/g, "\\'")}')" class="bg-cozy-green hover:bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-xl border-2 border-cozy-greenDark cozy-btn">
+                <i class="fa-solid fa-plus-circle mr-1"></i> Isi List
+              </button>
+
+              <div class="flex items-center space-x-3 text-xs text-slate-500 font-bold">
+                <button onclick="openForumRoom('${forum.id}')" class="hover:text-sky-600 flex items-center gap-1">
+                  <i class="fa-solid fa-comments text-sky-500"></i> ${chatCount}
+                </button>
+                <span>${new Date(forum.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</span>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    const forumsRef = ref(db, 'forums');
+    onValue(forumsRef, (snapshot) => {
+      forumsData = snapshot.val() || {};
+      renderForums();
+      if(activeRoomForumId) renderRoomContent();
+    }, (err) => {
+      console.error(err);
+      showToast("Gagal memuat data dari database", "error");
+    });
+
+    window.seedSampleList = async () => {
+      const sampleListItems = [
+        { studentName: "Icha", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Guardian Tales" },
+        { studentName: "Harits", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Call of Duty Mobile" },
+        { studentName: "Handrian", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Baldur's Gate 3" },
+        { studentName: "Kaka", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Minecraft Dungeons 2" },
+        { studentName: "Regan", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Reverse: 1999" },
+        { studentName: "Alan", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Honkai Star Rail" },
+        { studentName: "Zaki H", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Starsailors" },
+        { studentName: "Stela", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "It Takes Two" },
+        { studentName: "Dakota", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "Morrowind" },
+        { studentName: "Rohim", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "MCSR Ranked" },
+        { studentName: "Jovani", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "Final Fantasy VII" },
+        { studentName: "Bella Natasya", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Euro Truck Simulator 2" },
+        { studentName: "Bintang", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Ultraman: Fighting Evolution 3" },
+        { studentName: "Noval", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Kamen Rider: Super Climax Heroes" },
+        { studentName: "Teuku", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Genshin Impact" },
+        { studentName: "Miftah", studentClass: "Kelas B Pagi", subject: "Game Favorit", itemValue: "Cities: Skylines" },
+        { studentName: "Aurelia", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "Theo Town" },
+        { studentName: "Nafia", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "Zenless Zone Zero" },
+        { studentName: "Kairi", studentClass: "Kelas A Malam", subject: "Game Favorit", itemValue: "Dying Light" },
+        { studentName: "Dava", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "Overgeared Hero" },
+        { studentName: "Nailah", studentClass: "Kelas A Pagi", subject: "Game Favorit", itemValue: "The Sims 2" }
+      ];
+
+      const newForumRef = push(ref(db, 'forums'));
+      const forumId = newForumRef.key;
+
+      const itemsObject = {};
+      const baseTime = Date.now() - (sampleListItems.length * 60000);
+      
+      sampleListItems.forEach((item, idx) => {
+        const itemKey = `item_${idx + 1}`;
+        itemsObject[itemKey] = {
+          id: itemKey,
+          studentName: item.studentName,
+          studentClass: item.studentClass,
+          subject: item.subject,
+          itemValue: item.itemValue,
+          note: "Rekap List WA",
+          timestamp: baseTime + (idx * 60000)
+        };
+      });
+
+      const seedPayload = {
+        id: forumId,
+        title: "List Rekap Game Dimainkan Minggu Ini",
+        category: "List General",
+        targetClass: "Umum / Semua Kelas",
+        course: "Prodi Teknologi Permainan '26",
+        description: "Rekap daftar game yang sedang dimainkan mahasiswa prodi minggu ini. Silakan isi namamu agar kerekap dengan rapi.",
+        isPinned: true,
+        createdAt: Date.now(),
+        items: itemsObject,
+        chats: {
+          "c1": { id: "c1", senderName: "Harits", senderClass: "Kelas A Pagi", message: "Halo teman-teman, langsung isi list game kalian di sini ya!", timestamp: Date.now() - 300000 }
+        }
+      };
+
+      try {
+        await set(newForumRef, seedPayload);
+        showToast("21 Data Contoh Mahasiswa Berhasil Dimuat!", "success");
+      } catch (err) {
+        showToast("Gagal memuat sampel: " + err.message, "error");
+      }
+    };
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      let borderCol = "border-cozy-woodBorder bg-white";
+      let icon = "fa-circle-info text-sky-500";
+      if (type === 'success') {
+        borderCol = "border-cozy-greenDark bg-white";
+        icon = "fa-circle-check text-cozy-greenDark";
+      } else if (type === 'error') {
+        borderCol = "border-rose-400 bg-white";
+        icon = "fa-triangle-exclamation text-rose-500";
+      }
+
+      toast.className = `cozy-card p-3 text-xs font-bold ${borderCol} flex items-center space-x-2 shadow-xl animate-in fade-in duration-200 pointer-events-auto`;
+      toast.innerHTML = `<i class="fa-solid ${icon} text-sm"></i><span>${message}</span>`;
+      
+      container.appendChild(toast);
+      setTimeout(() => { toast.remove(); }, 3500);
+    }
+  </script>
+</body>
+</html>
